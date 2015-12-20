@@ -10,9 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Document;
 
 
 /**
@@ -22,6 +25,10 @@ import android.widget.Toast;
  */
 public class MainActivity extends ActionBarActivity {
 
+    TextView textview;
+    Document doc = null;
+    LinearLayout layout = null;
+    int day = 0;
     /**
      * 월별 캘린더 뷰 객체
      */
@@ -60,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
         monthView = (CalendarMonthView) findViewById(R.id.monthView);
         monthViewAdapter = new CalendarMonthAdapter(this);
         monthView.setAdapter(monthViewAdapter);
-
+       // textview = (TextView) findViewById(R.id.textView1);
         listView1 = (ListView) findViewById(R.id.listView1);
 
         // 어댑터 객체 생성
@@ -197,38 +204,24 @@ public class MainActivity extends ActionBarActivity {
                             monthViewAdapter.setAddDay(Integer.parseInt(result1[2]));
                         }
                     }
-                    //MonthItemView mv = new MonthItemView(this);
-                   // monthViewAdapter.
-                    /*
-                    btnDel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-
-                            int pos = listView1.getCheckedItemPosition();
-                            listView1.removeHeaderView(v);
-                            listView1.removeFooterView(v);
-
-                            adapter.notifyDataSetChanged();
-
-
-
-                        }
-                    });
-                    */
 
                 }
                 break;
         }
     }
-/*
-    public void onDelete(View v){
 
-        int id = listView1.getCheckedItemPosition();
+    public void onWeather2(View view){
 
-        adapter.removeItem();
-        adapter.notifyDataSetChanged();
-        Toast.makeText(getApplication(),"삭제 클릭" + id, Toast.LENGTH_LONG).show();
+
+        GetXMLTask task = new GetXMLTask(this);
+
+        int day = Integer.parseInt(Curday);
+        if(day >16){
+            Toast.makeText(getApplicationContext(),"날짜 정보는 16일까지만 제공됩니다.", Toast.LENGTH_SHORT).show();
+        }else {
+            task.setDay(day);
+
+            task.execute("http://www.kma.go.kr/wid/queryDFS.jsp?gridx=61&gridy=125");
+        }
     }
-    */
 }

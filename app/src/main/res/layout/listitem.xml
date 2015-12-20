@@ -35,4 +35,11 @@
 			android:gravity="right"
 			android:onClick="onDelete"/>
 
-</LinearLayout>  
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="날씨"
+			android:id="@+id/btnWeather2"
+			android:gravity="right"
+			android:onClick="onWeather2"/>
+</LinearLayout>
